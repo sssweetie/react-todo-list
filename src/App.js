@@ -1,5 +1,6 @@
 import React from "react";
 import TodoList from "./TodoList/TodoList";
+import Context from "./Context";
 
 function App() {
   const [todoArray, setTodoArray] = React.useState([
@@ -7,7 +8,7 @@ function App() {
     { id: 2, completed: false, title: "Check my hometasks" },
   ]);
 
-  function changeConditionMain(id) {
+  function changeCheckedApp(id) {
     setTodoArray(
       todoArray.map((todoElement) => {
         if (todoElement.id === id) {
@@ -17,8 +18,15 @@ function App() {
       })
     );
   }
+
+  function removeElement(id) {
+    setTodoArray(todoArray.filter(todoElement => todoElement.id !== id))
+  }
+
   return (
-    <TodoList todoArray={todoArray} changeCondition={changeConditionMain} />
+    <Context.Provider value={{ removeElement }}>
+      <TodoList todoArray={todoArray} changeChecked={changeCheckedApp} />
+    </Context.Provider>
   );
 }
 

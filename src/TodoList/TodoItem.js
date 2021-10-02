@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { pencil } from "./images/pencil";
 import { garbage } from "./images/garbage";
 import PropTypes from "prop-types";
+import Context from "../Context";
 
 const styles = {
   input: {
@@ -20,6 +21,11 @@ const styles = {
     justifyContent: "center",
   },
   garbage: {
+    "&:hover": {
+      width: "30px",
+      height: "30px",
+      cursor: "pointer",
+    },
     width: "24px",
     height: "26,67px",
     margin: "18.67px 20px 18.67px 0",
@@ -35,7 +41,8 @@ const styles = {
     marginLeft: "0",
   },
 };
-function TodoItem({ todoElement, onChange }) {
+function TodoItem({ todoElement, getElementId }) {
+  const { removeElement } = useContext(Context);
   const classes = [];
 
   if (todoElement.completed) {
@@ -48,19 +55,23 @@ function TodoItem({ todoElement, onChange }) {
         type="checkbox"
         checked={todoElement.completed}
         style={styles.input}
-        onChange={() => onChange(todoElement.id)}
+        onChange={() => getElementId(todoElement.id)}
       ></input>
       <a className={classes.join(" ")} style={styles.a}>
         {todoElement.title}
       </a>
-      <img style={styles.pencil} src={pencil}></img>
-      <img style={styles.garbage} src={garbage}></img>
+      <img style={styles.pencil} src={pencil}></img>{" "}
+      <img
+        style={styles.garbage}
+        onCLick={() => removeElement(todoElement.id)}
+        src={garbage}
+      ></img>
     </li>
   );
 }
 
 TodoItem.propTypes = {
   todoElement: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
+  getElementId: PropTypes.func.isRequired,
 };
 export default TodoItem;

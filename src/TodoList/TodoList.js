@@ -18,7 +18,7 @@ function TodoList(props) {
           <TodoItem
             todoElement={todoElement}
             key={todoElement.id}
-            onChange={props.changeCondition}
+            getElementId={props.changeChecked}
           />
         );
       })}
@@ -28,6 +28,6 @@ function TodoList(props) {
 
 TodoList.propTypes = {
   todoArray: PropTypes.arrayOf(PropTypes.object).isRequired,
-  changeCondition: PropTypes.func.isRequired,
+  changeChecked: PropTypes.func.isRequired,
 };
 export default TodoList;
