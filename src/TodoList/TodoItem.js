@@ -15,6 +15,7 @@ const styles = {
     alignItems: "flex-start",
     flexDirection: "flow",
     margin: "16px 0",
+    marginTop: "0px",
     border: "1px solid #E0E0E0",
     borderRadius: "8px",
     fontSize: "16px",
@@ -41,10 +42,9 @@ const styles = {
     marginLeft: "0",
   },
 };
-function TodoItem({ todoElement, getElementId }) {
-  const { removeElement } = useContext(Context);
+function TodoItem({ todoElement }) {
   const classes = [];
-
+  const { removeElement, changeStatusElement } = useContext(Context);
   if (todoElement.completed) {
     classes.push("completed");
   }
@@ -55,7 +55,7 @@ function TodoItem({ todoElement, getElementId }) {
         type="checkbox"
         checked={todoElement.completed}
         style={styles.input}
-        onChange={() => getElementId(todoElement.id)}
+        onChange={() => changeStatusElement(todoElement.id)}
       ></input>
       <a className={classes.join(" ")} style={styles.a}>
         {todoElement.title}
@@ -63,7 +63,7 @@ function TodoItem({ todoElement, getElementId }) {
       <img style={styles.pencil} src={pencil}></img>{" "}
       <img
         style={styles.garbage}
-        onCLick={() => removeElement(todoElement.id)}
+        onClick={() => removeElement(todoElement.id)}
         src={garbage}
       ></img>
     </li>

@@ -8,19 +8,14 @@ const styles = {
     width: "50%",
     height: "64px",
     padding: "16px",
+    margin: "0",
   },
 };
 function TodoList(props) {
   return (
     <ul style={styles.ul}>
       {props.todoArray.map((todoElement) => {
-        return (
-          <TodoItem
-            todoElement={todoElement}
-            key={todoElement.id}
-            getElementId={props.changeChecked}
-          />
-        );
+        return <TodoItem todoElement={todoElement} key={todoElement.id} />;
       })}
     </ul>
   );
@@ -28,6 +23,5 @@ function TodoList(props) {
 
 TodoList.propTypes = {
   todoArray: PropTypes.arrayOf(PropTypes.object).isRequired,
-  changeChecked: PropTypes.func.isRequired,
 };
 export default TodoList;
