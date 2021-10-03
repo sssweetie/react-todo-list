@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 const styles = {
-  span: {
+  form: {
     border: "1px solid #E0E0E0",
-    boxSizing: "border-box",
     borderRadius: "8px",
     margin: "0 16px",
     marginTop: "16px",
@@ -13,7 +13,7 @@ const styles = {
   },
   input: {
     borderRadius: "8px",
-    width: "70%",
+    width: "80%",
     margin: "0 16px",
     background: "#FFFFFF",
     border: "1px solid #E0E0E0",
@@ -26,23 +26,39 @@ const styles = {
     height: "40px",
     background: "#2F80ED",
     borderRadius: "8px",
-    fontStyle: "normal",
     fontWeight: "bold",
     fontSize: "16px",
     color: "#fff",
     border: "0px",
   },
 };
-function AddElement() {
-  const [value, setValue] = useState(" ");
 
+function AddElement({ onCreate }) {
+  const [text, setText] = useState(" ");
+
+  function Handler(event) {
+    event.preventDefault();
+
+    if (text.trim()) {
+      onCreate(text);
+      setText(" ");
+    }
+  }
   return (
-    <span style={styles.span}>
-      <input placeholder="Input text here..." style={styles.input} />
-      <button style={styles.button} type="submit">
+    <form style={styles.form} onSubmit={Handler}>
+      <input
+        value={text}
+        style={styles.input}
+        onChange={(event) => setText(event.target.value)}
+      />
+      <button type="submit" style={styles.button}>
         Add
       </button>
-    </span>
+    </form>
   );
 }
+
+AddElement.propTypes = {
+  onCreate: PropTypes.func.isRequired,
+};
 export default AddElement;

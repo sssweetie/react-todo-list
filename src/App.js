@@ -23,12 +23,23 @@ function App() {
     setTodoArray(todoArray.filter((todoElement) => todoElement.id !== id));
   }
 
+  function add(title) {
+    setTodoArray(
+      todoArray.concat([
+        {
+          title,
+          id: Date.now(),
+          completed: false,
+        },
+      ])
+    );
+  }
   return (
     <Context.Provider value={{ removeElement, changeStatusElement }}>
-      <form>
-        <AddElement />
+      <div>
+        <AddElement onCreate={add} />
         <TodoList todoArray={todoArray} />
-      </form>
+      </div>
     </Context.Provider>
   );
 }
